@@ -1,0 +1,85 @@
+
+template(name="layout")
+  +navBar
+  +yield
+
+template(name="navBar")
+  nav.navbar.navbar-inverse.navbar-fixed-top
+    .container
+      .navbar-header
+        button.navbar-toggle.collapsed(type="button",data-toggle="collapse",data-target="#navbar",aria-expanded="false",aria-controls="navbar")
+          span.sr-only Toggle navigation
+          span.icon-bar
+          span.icon-bar
+          span.icon-bar
+
+        a.pathForLink.navbar-brand(href="{{pathFor 'index'}}") TW.R 2015
+
+      .collapse.navbar-collapse#navbar
+        ul.nav.navbar-nav
+          li
+            a.pathForLink(href="#") Speaker Leaderboard
+          li
+            a.pathForLink(href="#") Events
+
+
+        ul.nav.navbar-nav.navbar-right
+          li.nav.navbar-nav
+            +loginButtons
+
+template(name="index")
+  .container
+    .starter-template
+      if liveEvent
+        hr
+        h1 LIVE EVENT: {{liveEvent.challange}}
+        hr
+
+      a.btn.btn-primary.btn-lg.userBt(href="{{pathFor 'audience'}}") As an Audience
+      if loginUser
+        a.btn.btn-danger.btn-lg.speakerBt(href="{{pathFor 'speaker'}}") As a Speaker
+        if isAdmin
+          a.btn.btn-success.btn-lg.eventHolderBt(href="{{pathFor 'admin'}}") As an Admin
+
+
+
+template(name="audience")
+  .container
+    .starter-template
+      if liveEvent
+        hr
+        h1 LIVE EVENT: {{liveEvent.challange}}
+        p LIVE Audiences: {{liveAudiences}}
+        p {{liveEvent.unit}} 量數: {{votedAudiences}}
+        hr
+        button.voteBt.btn.btn-primary.btn-lg(eventId="{{liveEvent._id}}") {{liveEvent.unit}}
+      else
+        hr
+        h1 WAITING FOR STARTING!
+        hr
+
+template(name="speaker")
+  .container
+    .starter-template
+      hr
+      h1 Challange Submit:
+      hr
+      +eventEditorForm
+      hr
+      each myEvents
+        hr
+        h3 挑戰：{{challange}} / {{unit}} 量數 / 預估：{{predictPeriod}} 分鐘被轟下台 / 狀態：{{status}}
+        hr
+
+template(name="admin")
+  .container
+    .starter-template
+      h2 TEST admin
+
+template(name="eventEditorForm")
+  +autoForm id="eventEditor" schema=eventEditSchema type="method" meteormethod="submitEvent"
+    +afQuickField name="challange" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
+    +afQuickField name="unit" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
+    +afQuickField name="period" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
+    button(type="submit").btn.btn-primary.btn-lg Submit!
+
