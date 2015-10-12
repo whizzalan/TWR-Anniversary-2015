@@ -31,11 +31,13 @@ template(name="navBar")
 template(name="index")
   .container
     .starter-template
+
       if liveEvent
         hr
         h1 LIVE EVENT: {{liveEvent.challenge}}
         hr
 
+      img(src="images/QRCode.png",width="50%")
       a.btn.btn-primary.btn-lg.userBt(href="{{pathFor 'audience'}}") As an Audience
       if loginUser
         a.btn.btn-danger.btn-lg.speakerBt(href="{{pathFor 'speaker'}}") As a Speaker
