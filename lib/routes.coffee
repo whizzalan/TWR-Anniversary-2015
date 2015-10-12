@@ -12,7 +12,7 @@ Router.map ->
           Meteor.userId()
 
         isAdmin: ->
-          Meteor.user().profile.isAdmin
+          Meteor.user()?.profile?.isAdmin
 
         liveEvent: ->
           Events.findOne status:"LIVE"
