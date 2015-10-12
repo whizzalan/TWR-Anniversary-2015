@@ -84,7 +84,27 @@ template(name="eventEditorForm")
 template(name="admin")
   .container
     .starter-template
-      h2 TODO: admin page
+      hr
+      +eventsTable
+      hr
+      h1 Agenda:
+      hr
+      each events
+        +eventInAgenda
+
+
+template(name="eventInAgenda")
+  hr
+  if isLive
+    h2 [LIVE] {{challange}} ({{duration}} min)
+  else
+    if isFinished
+      h2 [FINISHED] {{challange}} ({{duration}} min)
+    else
+      h2 {{challange}} ({{duration}} min)
+      +eventsStartBt
+  hr
+
 
 
 template(name="agenda")
@@ -98,3 +118,16 @@ template(name="leaderboard")
     .starter-template
       h2 TODO: leaderboard page
 
+
+template(name="eventsTable")
+  +reactiveTable settings=settings
+
+template(name="eventsScheduleBt")
+  if isScheduled
+    p scheduled!
+  else
+    a.scheduleEventBt.btn.btn-primary(href="#",eventId="{{_id}}") Schedule!
+
+template(name="eventsStartBt")
+  //- if isScheduled
+  a.startEventBt.btn.btn-primary(href="#",eventId="{{_id}}") Start

@@ -1,9 +1,14 @@
 Meteor.publish null, ->
   if @userId
-    query =
-      "$or": [{speaker:@userId}, {status:"LIVE"}]
-  else
-    query =
-      status:"LIVE"
+    if Meteor.users.findOne({_id:@userId}).profile.isAdmin
+      eventsQuery = {}
 
-  Events.find(query)
+    else
+      eventsQuery =
+        "$or": [{speaker:@userId}, {status: {$in: ["LIVE", "scheduled"]} }]
+  else
+    eventsQuery =
+      status:
+        $in: ["LIVE", "scheduled"]
+
+  Events.find(eventsQuery)
