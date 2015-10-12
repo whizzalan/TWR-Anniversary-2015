@@ -1,4 +1,18 @@
 
+Template.agenda.helpers
+  events: ->
+    Events.find({status:{$in:["scheduled","LIVE","FINISHED"]}})
+
+Template.eventsEndBt.events
+  "click .endEventBt": (e,t)->
+    eventId = $(e.target).attr "eventId"
+    Meteor.call "endEvent", eventId, (err, res)->
+      if not err
+        console.log "res = "
+        console.log res
+
+
+
 Template.eventsStartBt.events
   "click .startEventBt": (e,t)->
     eventId = $(e.target).attr "eventId"
@@ -16,7 +30,7 @@ Template.eventsStartBt.helpers
 
 Template.admin.helpers
   events: ->
-    Events.find()
+    Events.find({status:{$in:["scheduled","LIVE","FINISHED"]}})
 
 Template.eventInAgenda.helpers
   isLive: ->
@@ -50,19 +64,23 @@ Template.eventsTable.helpers
       collection:Events
       rowsPerPage:20
       showFilter: true
-      fields:["challange","unit","hitTH","duration","speaker","status", scheduleBtField]
+      fields:["challenge","unit","hitTH","duration","speaker","status", scheduleBtField]
 
 
 
 Template.eventEditorForm.helpers
   eventEditSchema: ->
     resSchema = new SimpleSchema
-      challange:
-        label: "Challange Title"
+      speakerName:
+        label: "Display Speaker's Name"
+        type: String
+
+      challenge:
+        label: "Challenge Title"
         type: String
 
       unit:
-        label: "Challange Unit"
+        label: "Challenge Unit"
         type: String
 
       hitTH:

@@ -33,7 +33,7 @@ template(name="index")
     .starter-template
       if liveEvent
         hr
-        h1 LIVE EVENT: {{liveEvent.challange}}
+        h1 LIVE EVENT: {{liveEvent.challenge}}
         hr
 
       a.btn.btn-primary.btn-lg.userBt(href="{{pathFor 'audience'}}") As an Audience
@@ -49,7 +49,7 @@ template(name="audience")
     .starter-template
       if liveEvent
         hr
-        h1 LIVE EVENT: {{liveEvent.challange}}
+        h1 LIVE EVENT: {{liveEvent.challenge}}
         p LIVE Audiences: {{liveAudiences}}
         p {{liveEvent.unit}} 量數: {{votedAudiences}}
         hr
@@ -63,18 +63,19 @@ template(name="speaker")
   .container
     .starter-template
       hr
-      h1 Challange Submit:
+      h1 Challenge Submit:
       hr
       +eventEditorForm
       hr
       each myEvents
         hr
-        h3 挑戰：{{challange}} / {{unit}} 量數 / 預估：{{hitTH}} 分鐘被轟下台/ Duration: {{duration}} Minutes / 狀態：{{status}}
+        h3 挑戰：{{challenge}} / {{unit}} 量數 / 預估：{{hitTH}} 分鐘被轟下台/ Duration: {{duration}} Minutes / 狀態：{{status}}
         hr
 
 template(name="eventEditorForm")
   +autoForm id="eventEditor" schema=eventEditSchema type="method" meteormethod="submitEvent"
-    +afQuickField name="challange" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
+    +afQuickField name="speakerName" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
+    +afQuickField name="challenge" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
     +afQuickField name="unit" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
     +afQuickField name="hitTH" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
     +afQuickField name="duration" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
@@ -96,21 +97,28 @@ template(name="admin")
 template(name="eventInAgenda")
   hr
   if isLive
-    h2 [LIVE] {{challange}} ({{duration}} min)
+    h2 [LIVE] {{challenge}} ({{speakerName}} / {{duration}} min)
+    +eventsEndBt
+
   else
     if isFinished
-      h2 [FINISHED] {{challange}} ({{duration}} min)
+      h2 [FINISHED] {{challenge}} ({{speakerName}} / {{duration}} min)
     else
-      h2 {{challange}} ({{duration}} min)
+      h2 {{challenge}} ({{speakerName}} / {{duration}} min)
       +eventsStartBt
   hr
+
 
 
 
 template(name="agenda")
   .container
     .starter-template
-      h2 TODO: agenda page
+      hr
+      h1 Agenda:
+      hr
+      each events
+        h2 [{{status}}] {{challenge}} ({{speakerName}} / {{duration}} min)
 
 
 template(name="leaderboard")
@@ -129,5 +137,8 @@ template(name="eventsScheduleBt")
     a.scheduleEventBt.btn.btn-primary(href="#",eventId="{{_id}}") Schedule!
 
 template(name="eventsStartBt")
-  //- if isScheduled
   a.startEventBt.btn.btn-primary(href="#",eventId="{{_id}}") Start
+
+
+template(name="eventsEndBt")
+  a.endEventBt.btn.btn-primary(href="#",eventId="{{_id}}") End

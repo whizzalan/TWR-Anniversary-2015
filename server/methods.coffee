@@ -1,4 +1,15 @@
 Meteor.methods
+  endEvent: (eventId)->
+    userId = Meteor.userId()
+    if not userId
+      throw new Meteor.Error(401, "You need to login")
+
+    if not Meteor.user().profile.isAdmin
+      throw new Meteor.Error(405, "Has no Authencation to schedule!")
+
+    Events.update {_id:eventId}, {$set:{status:"FINISHED", endedAt: new Date}}
+
+
   startEvent: (eventId)->
     userId = Meteor.userId()
     if not userId
@@ -30,7 +41,8 @@ Meteor.methods
       throw new Meteor.Error(999, "ValueError: data.hitTH > data.duration")
 
     eventData =
-      challange: data.challange
+      speakerName: data.speakerName
+      challenge: data.challenge
       unit: data.unit
       hitTH: data.hitTH
       duration: data.duration
