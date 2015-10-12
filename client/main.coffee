@@ -9,10 +9,18 @@ Template.eventEditorForm.helpers
         label: "Challange Unit"
         type: String
 
-      period:
-        label: "Prediction Time (minutes) to hit threshold"
+      hitTH:
+        label: "Time to Hit Threshld (minutes)"
         type: Number
         min: 1
+
+      duration:
+        label: "Talk Duration (minutes)"
+        type: Number
+        min: 1
+
+
+
 
 
 Template.audience.events

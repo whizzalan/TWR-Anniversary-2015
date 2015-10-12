@@ -18,9 +18,10 @@ template(name="navBar")
       .collapse.navbar-collapse#navbar
         ul.nav.navbar-nav
           li
-            a.pathForLink(href="#") Speaker Leaderboard
+            a.pathForLink(href="{{pathFor 'agenda'}}") Agenda
+
           li
-            a.pathForLink(href="#") Events
+            a.pathForLink(href="{{pathFor 'leaderboard'}}") Speaker Leaderboard
 
 
         ul.nav.navbar-nav.navbar-right
@@ -68,18 +69,32 @@ template(name="speaker")
       hr
       each myEvents
         hr
-        h3 挑戰：{{challange}} / {{unit}} 量數 / 預估：{{predictPeriod}} 分鐘被轟下台 / 狀態：{{status}}
+        h3 挑戰：{{challange}} / {{unit}} 量數 / 預估：{{hitTH}} 分鐘被轟下台/ Duration: {{duration}} Minutes / 狀態：{{status}}
         hr
-
-template(name="admin")
-  .container
-    .starter-template
-      h2 TEST admin
 
 template(name="eventEditorForm")
   +autoForm id="eventEditor" schema=eventEditSchema type="method" meteormethod="submitEvent"
     +afQuickField name="challange" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
     +afQuickField name="unit" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
-    +afQuickField name="period" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
+    +afQuickField name="hitTH" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
+    +afQuickField name="duration" template="bootstrap3-inline" label-class="sr-only" afFieldInput-placeholder="schemaLabel"
     button(type="submit").btn.btn-primary.btn-lg Submit!
+
+
+template(name="admin")
+  .container
+    .starter-template
+      h2 TODO: admin page
+
+
+template(name="agenda")
+  .container
+    .starter-template
+      h2 TODO: agenda page
+
+
+template(name="leaderboard")
+  .container
+    .starter-template
+      h2 TODO: leaderboard page
 

@@ -12,7 +12,7 @@ Router.map ->
           Meteor.userId()
 
         isAdmin: ->
-          Meteor.userId() in ["6HHcA47iuCyFdpfpt"]
+          Meteor.user().profile.isAdmin
 
         liveEvent: ->
           Events.findOne status:"LIVE"
@@ -83,6 +83,24 @@ Router.map ->
   @route "admin",
     path: "/admin"
     template: "admin"
+    waitOn: ->
+      unless Cookies.get "uuid"
+        chance = new Chance
+        uuid = chance.guid()
+        Cookies.set "uuid", uuid
+
+  @route "agenda",
+    path: "/agenda"
+    template: "agenda"
+    waitOn: ->
+      unless Cookies.get "uuid"
+        chance = new Chance
+        uuid = chance.guid()
+        Cookies.set "uuid", uuid
+
+  @route "leaderboard",
+    path: "/leaderboard"
+    template: "leaderboard"
     waitOn: ->
       unless Cookies.get "uuid"
         chance = new Chance

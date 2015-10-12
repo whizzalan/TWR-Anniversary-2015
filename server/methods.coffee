@@ -7,10 +7,11 @@ Meteor.methods
     eventData =
       challange: data.challange
       unit: data.unit
-      predictPeriod: data.period
+      hitTH: data.hitTH
+      duration: data.duration
       speaker: userId
       createdAt: new Date
-      status: "waitingForCheck"
+      status: "waitingForSchedule"
 
 
     Events.insert eventData
